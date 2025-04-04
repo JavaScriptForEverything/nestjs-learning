@@ -1,0 +1,21 @@
+
+POST http://localhost:3000/posts/
+Content-Type: application/json
+{
+	"title": "my post title",
+	"type": "post",
+	"slug": "unique-title-1",
+	"status" : "draft",
+	"content" : "content goes here",
+	"schema": "{\"name\":\"riajul\",\"age\":30}",
+	"featuredImageUrl": "http://image.jpg",
+	"publishedOn": "2025-04-04T10:23:31.502Z",
+	"tags": ["item1", "item2"],
+	"metaOptions": [
+		{
+			"key": "isOpen",
+			"value": "true"
+		}
+	]
+}
+

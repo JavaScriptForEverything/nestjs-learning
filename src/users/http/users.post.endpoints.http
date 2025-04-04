@@ -1,0 +1,12 @@
+@origin = http://localhost:3000/users
+
+POST {{origin}}
+Content-Type: application/json
+{
+	"isAuthenticated": true,
+
+	"name": "riajul islam",
+	"email": "riajul@gmail.com",
+	"password": "asdfasdF@2",
+	"confirmPassword": "asdfasdf"
+}
