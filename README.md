@@ -1,5 +1,30 @@
 ## Nestjs Learning | NestJS_Masterclass_NodeJS_Framework_Backend_Development
 
+```
+$ yarn dev
+$ yarn start
+
+(browser) http://localhost:3000                 : App
+(browser) http://localhost:3000/api             : Swagger API Documentation
+
+
+$ yarn doc
+
+(browser) http://localhost:3001                 : CompoDoc API Documentation
+
+
+$ docker compose up -d
+(browser) http://localhost:5050                 : PostgreSQL DB with pgAdmin
+
+        Email           : admin@admin.com
+        Password        : admin123
+
+$ docker container exec -it postgres_container bash
+$ psql --version
+$ pg_ctl --version
+```
+
+
 Nest.js
 	- is nodejs framework
 	- it is follows Angular pattern for backend node framework

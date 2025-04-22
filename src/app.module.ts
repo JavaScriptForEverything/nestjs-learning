@@ -4,9 +4,46 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+
 
 @Module({
-  imports: [UsersModule, PostsModule, AuthModule],
+  imports: [
+		ConfigModule.forRoot({
+			isGlobal: true,
+			envFilePath: '.env'
+		}),
+		// TypeOrmModule.forRoot({
+		// 	type: 'postgres',
+		// 	host: 'localhost',
+		// 	port: 5432,
+		// 	username: 'myuser',
+		// 	password: 'mypass',
+		// 	database: 'mydb',
+
+		// 	entities: [],
+		// 	synchronize: true
+		// }),
+		TypeOrmModule.forRootAsync({
+			inject: [ConfigService], 													// for .env
+			useFactory: (config: ConfigService) => ({
+				type: 'postgres',
+				host: config.get<string>('DB_HOST'),
+        port: config.get<number>('DB_PORT'),
+        username: config.get<string>('DB_USERNAME'),
+        password: config.get<string>('DB_PASSWORD'),
+        database: config.get<string>('DB_NAME'),
+
+        synchronize: config.get<string>('NODE_ENV') === 'development',
+				entities: [],
+			})
+		}),
+
+		UsersModule, 
+		PostsModule, 
+		AuthModule,
+	],
   controllers: [AppController],
   providers: [AppService],
 })
