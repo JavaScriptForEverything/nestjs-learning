@@ -17,7 +17,9 @@ import { ApiTags } from '@nestjs/swagger'
 // @ApiTags('users') 						// to add swagger tags to override default one
 export class UsersController {
 	 
-	constructor(private readonly userService: UserService) { }
+	constructor(
+		private readonly userService: UserService
+	) {}
 
 
 	@Get('/authenticated')
@@ -83,7 +85,9 @@ export class UsersController {
   @Post()
   public createUser(@Body(new ValidationPipe({ whitelist: true })) body: CreateUserDto ) {
   // public createUser(@Body() body: CreateUserDto ) {
-    console.log(body);
-    return 'POST request to /users';
+    // console.log(body);
+    // return body
+
+		return this.userService.createUser(body)
   }
 }

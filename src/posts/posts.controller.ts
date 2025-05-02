@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { PostService } from './providers/posts.service'
 import { CreatePostBodyDTO, UpdatePostBodyDto } from './dtos/posts.dtos'
 import { ApiOperation, ApiResponse } from '@nestjs/swagger'
@@ -9,12 +9,17 @@ export class PostsController {
 
 	constructor( private readonly postService: PostService) {}
 
-	@Get('/:userId')
-	public getPosts (
-		@Param('userId') userId: string
-	) {
-		return this.postService.getPosts(userId)
+	@Get('/')
+	public getPosts () {
+		return this.postService.getPosts()
 	}
+
+	// @Get('/:userId')
+	// public getPosts (
+	// 	@Param('userId') userId: string
+	// ) {
+	// 	return this.postService.getPosts(userId)
+	// }
 
 	@Get('/:postId')
 	public getPostById (
@@ -36,7 +41,7 @@ export class PostsController {
 		@Body( new ValidationPipe()) body: CreatePostBodyDTO
 	) {
 
-		return body
+		return this.postService.createPost(body)
 	}
 
 
@@ -49,6 +54,7 @@ export class PostsController {
 	})
 	@Patch('/')
 	public updatePost (
+		// @Body( new ValidationPipe()) body: UpdatePostBodyDto
 		@Body( new ValidationPipe()) body: UpdatePostBodyDto
 	) {
 

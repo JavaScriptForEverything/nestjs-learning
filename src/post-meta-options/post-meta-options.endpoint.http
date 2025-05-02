@@ -1,0 +1,13 @@
+
+GET http://localhost:3000/post-meta-options
+
+
+
+POST http://localhost:3000/post-meta-options
+Content-Type: application/json
+Accept: application/json
+{
+	"name": "meta option 2",
+	"slug2": 0,
+	"slug": "meta-option-2"
+}

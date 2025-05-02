@@ -1,5 +1,5 @@
 import { IsArray, IsEnum, IsInt, IsISO8601, IsJSON, IsNotEmpty, IsOptional, IsString, IsUrl, Matches, MinLength, ValidateNested } from 'class-validator'
-import { Type } from 'class-transformer'
+import { Transform, Type } from 'class-transformer'
 import { PostStatus, PostType } from '../enums/post.enum'
 import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger'
 
@@ -107,15 +107,15 @@ export class CreatePostBodyDTO {
 	@IsNotEmpty() 				
 	type: PostType
 
-	@ApiProperty({
-		example: 'slug-allow-small-letter-without-space',
-	}) 				
-	@IsString() 					
-	@IsNotEmpty() 				
-	@Matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, { 							// validate: function(value) { return  }
-		message: 'slug-allow-small-letter-without-space'
-	})
-	slug: string
+	// @ApiProperty({
+	// 	example: 'slug-allow-small-letter-without-space',
+	// }) 				
+	// @IsString() 					
+	// @IsNotEmpty() 				
+	// @Matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, { 							// validate: function(value) { return  }
+	// 	message: 'slug-allow-small-letter-without-space'
+	// })
+	// slug: string
 
 	@ApiProperty({
 		enum: PostStatus
@@ -137,6 +137,8 @@ export class CreatePostBodyDTO {
 	@IsOptional() 									// required: false
 	@IsJSON() 											// json string, not regular string
 	schema?: string
+
+
 
 	@ApiPropertyOptional({
 		example: 'http://image.jpg'
@@ -189,7 +191,8 @@ export class CreatePostBodyDTO {
 	@Type(() => PostBodyMetaOptionDTO)
 	metaOptions?: PostBodyMetaOptionDTO[] 	// metaOptions: [ metaOptionSchema ]
 }
-class PostBodyMetaOptionDTO {
+
+export class PostBodyMetaOptionDTO {
 	@IsString()
 	@IsNotEmpty()
 	key: string

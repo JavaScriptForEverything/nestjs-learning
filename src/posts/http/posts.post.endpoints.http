@@ -4,7 +4,7 @@ Content-Type: application/json
 {
 	"title": "my post title",
 	"type": "post",
-	"slug": "unique-title-1",
+	"slug_optional": "unique-title-2",
 	"status" : "draft",
 	"content" : "content goes here",
 	"schema": "{\"name\":\"riajul\",\"age\":30}",

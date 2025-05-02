@@ -1,25 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { UserService } from 'src/users/providers/users.service'
+import { CreatePostBodyDTO } from '../dtos/posts.dtos'
+import { Post } from '../post.entry'
+import { Repository } from 'typeorm'
+import { InjectRepository } from '@nestjs/typeorm'
 
 @Injectable()
 export class PostService {
 
-	constructor(private readonly userService: UserService) {}
+	constructor(
+		@InjectRepository(Post)
+		private readonly postsRepository: Repository<Post>,
 
-	public getPosts(userId: string) {
-		const user = this.userService.getUserById(Number(userId))
-		return [
-			{
-				id: 1,
-				title: 'post 1',
-				user,
-			},
-			{
-				id: 2,
-				title: 'post 2',
-				user,
-			}
-		]
+		private readonly userService: UserService,
+	) {}
+
+	public async getPosts() {
+		let posts = await this.postsRepository.find({})
+
+		return posts
 	}
 
 	public getPostById( postId: number) {
@@ -27,5 +26,15 @@ export class PostService {
 			id: postId,
 			title: `post ${postId}`,
 		}
+	}
+
+
+	public async createPost(body: CreatePostBodyDTO) {
+		let post = this.postsRepository.create(body)
+		post = await this.postsRepository.save(post)
+
+		if(!post) return { error: 'post created failed' }
+
+		return post
 	}
 }

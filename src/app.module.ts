@@ -6,6 +6,12 @@ import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { User } from './users/user.entity'
+import { Post } from './posts/post.entry'
+import { TagsModule } from './tags/tags.module';
+import { Tag } from './tags/tag.entity'
+import { PostMetaOptionsModule } from './post-meta-options/post-meta-options.module';
+import { PostMetaOption } from './post-meta-options/post-meta-options.entity'
 
 
 @Module({
@@ -36,13 +42,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
         database: config.get<string>('DB_NAME'),
 
         synchronize: config.get<string>('NODE_ENV') === 'development',
-				entities: [],
+				entities: [User, Post, Tag, PostMetaOption],
+				// autoLoadEntities: true
 			})
 		}),
 
 		UsersModule, 
 		PostsModule, 
-		AuthModule,
+		AuthModule, TagsModule, PostMetaOptionsModule,
 	],
   controllers: [AppController],
   providers: [AppService],

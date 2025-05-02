@@ -1,0 +1,12 @@
+
+GET http://localhost:3000/tags
+
+
+POST http://localhost:3000/tags
+Content-Type: application/json
+Accept: application/json
+{
+	"name": "tag1",
+	"slug2": 0,
+	"slug": "tag-1"
+}
